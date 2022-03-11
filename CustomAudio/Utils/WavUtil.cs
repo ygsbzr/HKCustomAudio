@@ -426,5 +426,12 @@ namespace CustomAudio.Utils
         }
 
         #endregion
+        public static AudioClip createaudioclipbybyte(byte[] bytes, string name)
+        {
+            WAV wav = new(bytes);
+            AudioClip audio = AudioClip.Create(name, wav.SampleCount, 1, wav.Frequency, false);
+            audio.SetData(wav.LeftChannel,0);
+            return audio;
+        }
     }
 }

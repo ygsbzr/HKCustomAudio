@@ -56,7 +56,7 @@
         }
         public static AudioClip GetAudioInDic(string name,Dictionary<string,AudioClip> audiodic)
         {
-            AudioClip audio = audiodic.Where(x => name.Contains(x.Key))
+            AudioClip audio = audiodic.Where(x => name==x.Key)
                 .FirstOrDefault()
                 .Value;
             return audio;
@@ -91,11 +91,31 @@
         }
         public static void replaceAudioPlay(this AudioPlay action, Dictionary<string, AudioClip> audiodic)
         {
-
-            AudioClip clip = GetAudioInDic(action.oneShotClip.Value.name, audiodic);
-            if (clip != null)
+            GameObject ownerDefaultTarget = action.Fsm.GetOwnerDefaultTarget(action.gameObject);
+            if (ownerDefaultTarget != null)
             {
-                action.oneShotClip.Value = clip;
+                AudioSource audioSource= ownerDefaultTarget.GetComponent<AudioSource>();
+                if (audioSource!=null)
+                {
+                    if(action.oneShotClip==null)
+                    {
+                        AudioClip audio = GetAudioInDic(audioSource.clip.name, audiodic);
+                        if(audio!=null)
+                        {
+                            audioSource.clip = audio;
+                        }
+                        return;
+
+                    }
+                    else
+                    {
+                        AudioClip clip = GetAudioInDic(action.oneShotClip.Name, audiodic);
+                        if(clip != null)
+                        {
+                            action.oneShotClip.Value=clip;
+                        }
+                    }
+                }
             }
         }
         public static void replaceAudioPlayeroneShotSingle(this AudioPlayerOneShotSingle action, Dictionary<string, AudioClip> audiodic)
