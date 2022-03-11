@@ -8,6 +8,10 @@ namespace CustomAudio
        new public string GetName()=>nameof(CustomAudio);
         public static readonly string audiodir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ReplaceAudio");
         public static Dictionary<string, AudioClip> audiodic = new();
+        public override string GetVersion()
+        {
+            return "1.0";
+        }
         public override void Initialize()
         {
             On.HeroController.Start += Loadaudio;
