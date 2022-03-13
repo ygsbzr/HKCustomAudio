@@ -83,10 +83,31 @@
         
         public static void replaceAudioPlaySimple( this AudioPlaySimple action, Dictionary<string, AudioClip> audiodic)
         {
-            AudioClip clip = GetAudioInDic(action.oneShotClip.Value.name, audiodic);
-            if(clip!=null)
+            GameObject ownerDefaultTarget = action.Fsm.GetOwnerDefaultTarget(action.gameObject);
+            if (ownerDefaultTarget != null)
             {
-                action.oneShotClip.Value = clip;
+                AudioSource audioSource = ownerDefaultTarget.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    if (action.oneShotClip == null)
+                    {
+                        AudioClip audio = GetAudioInDic(audioSource.clip.name, audiodic);
+                        if (audio != null)
+                        {
+                            audioSource.clip = audio;
+                        }
+                        return;
+
+                    }
+                    else
+                    {
+                        AudioClip clip = GetAudioInDic(action.oneShotClip.Name, audiodic);
+                        if (clip != null)
+                        {
+                            action.oneShotClip.Value = clip;
+                        }
+                    }
+                }
             }
         }
         public static void replaceAudioPlay(this AudioPlay action, Dictionary<string, AudioClip> audiodic)
@@ -155,10 +176,31 @@
         }
         public static void replaceAudioPlayV2(this AudioPlayV2 action, Dictionary<string, AudioClip> audiodic)
         {
-            AudioClip clip = GetAudioInDic(action.oneShotClip.Value.name, audiodic);
-            if (clip != null)
+            GameObject ownerDefaultTarget = action.Fsm.GetOwnerDefaultTarget(action.gameObject);
+            if (ownerDefaultTarget != null)
             {
-                action.oneShotClip.Value = clip;
+                AudioSource audioSource = ownerDefaultTarget.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    if (action.oneShotClip == null)
+                    {
+                        AudioClip audio = GetAudioInDic(audioSource.clip.name, audiodic);
+                        if (audio != null)
+                        {
+                            audioSource.clip = audio;
+                        }
+                        return;
+
+                    }
+                    else
+                    {
+                        AudioClip clip = GetAudioInDic(action.oneShotClip.Name, audiodic);
+                        if (clip != null)
+                        {
+                            action.oneShotClip.Value = clip;
+                        }
+                    }
+                }
             }
         }
         public static void replacePlayRandomSound(this PlayRandomSound action, Dictionary<string, AudioClip> audiodic)
