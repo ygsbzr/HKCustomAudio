@@ -75,7 +75,6 @@
                 else
                 {
                     clips[i] = origClips[i];
-                    Modding.Logger.LogDebug($"orig{clips[i].name}");
                 }
             }
             action.audioClips = clips;
@@ -101,7 +100,7 @@
                     }
                     else
                     {
-                        AudioClip clip = GetAudioInDic(action.oneShotClip.Name, audiodic);
+                        AudioClip clip = GetAudioInDic(action.oneShotClip.Value.name, audiodic);
                         if (clip != null)
                         {
                             action.oneShotClip.Value = clip;
@@ -130,7 +129,7 @@
                     }
                     else
                     {
-                        AudioClip clip = GetAudioInDic(action.oneShotClip.Name, audiodic);
+                        AudioClip clip = GetAudioInDic(action.oneShotClip.Value.name, audiodic);
                         if(clip != null)
                         {
                             action.oneShotClip.Value=clip;
@@ -161,7 +160,6 @@
                 else
                 {
                     clips[i] = origClips[i];
-                    Modding.Logger.LogDebug($"orig{clips[i].name}");
                 }
             }
             action.audioClips = clips;
@@ -194,7 +192,7 @@
                     }
                     else
                     {
-                        AudioClip clip = GetAudioInDic(action.oneShotClip.Name, audiodic);
+                        AudioClip clip = GetAudioInDic(action.oneShotClip.Value.name, audiodic);
                         if (clip != null)
                         {
                             action.oneShotClip.Value = clip;
@@ -217,7 +215,6 @@
                 else
                 {
                     clips[i] = origClips[i];
-                    Modding.Logger.LogDebug($"orig{clips[i].name}");
                 }
             }
             action.audioClips = clips;

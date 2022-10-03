@@ -8,6 +8,7 @@
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>true</ImplicitUsings>
     <Deterministic>true</Deterministic>
+	<Version>1.2.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -46,4 +47,22 @@
 		<Private>false</Private>
     </Reference>
   </ItemGroup>
+	<Target Name="CopyMod" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="D:/Steamself/steamapps/common/Hollow Knight/hollow_knight_Data/Managed/Mods/$(TargetName)" SkipUnchangedFiles="true" />
+	</Target>
+	<Target Name="CreateReleaseZip" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
+		<RemoveDir Directories="$(SolutionDir)/dist" />
+		<MakeDir Directories="$(SolutionDir)/dist/tmp" />
+
+		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(SolutionDir)/LICENSE;$(SolutionDir)/README.md" DestinationFolder="$(SolutionDir)/dist/tmp" />
+		<ZipDirectory SourceDirectory="$(SolutionDir)/dist/tmp" DestinationFile="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" />
+		<RemoveDir Directories="$(SolutionDir)/dist/tmp" />
+		<GetFileHash Files="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" Algorithm="SHA256">
+
+			<Output TaskParameter="Items" ItemName="FilesWithHashes" />
+		</GetFileHash>
+		<Message Importance="High" Text="@(FilesWithHashes->'%(Identity): %(FileHash)')" />
+
+
+	</Target>
 </Project>

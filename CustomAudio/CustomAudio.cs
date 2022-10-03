@@ -10,7 +10,7 @@ namespace CustomAudio
         public static Dictionary<string, AudioClip> audiodic = new();
         public override string GetVersion()
         {
-            return "1.1";
+            return "1.2.0";
         }
         public override void Initialize()
         {
