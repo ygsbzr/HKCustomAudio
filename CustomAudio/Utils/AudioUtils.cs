@@ -56,6 +56,10 @@
         }
         public static AudioClip GetAudioInDic(string name,Dictionary<string,AudioClip> audiodic)
         {
+           if(name == null)
+            {
+                return null;
+            }
             AudioClip audio = audiodic.Where(x => name==x.Key)
                 .FirstOrDefault()
                 .Value;
@@ -100,7 +104,7 @@
                     }
                     else
                     {
-                        AudioClip clip = GetAudioInDic(action.oneShotClip.Value.name, audiodic);
+                        AudioClip clip = GetAudioInDic(action.oneShotClip.Value?.name, audiodic);
                         if (clip != null)
                         {
                             action.oneShotClip.Value = clip;
@@ -129,7 +133,7 @@
                     }
                     else
                     {
-                        AudioClip clip = GetAudioInDic(action.oneShotClip.Value.name, audiodic);
+                        AudioClip clip = GetAudioInDic(action.oneShotClip.Value?.name, audiodic);
                         if(clip != null)
                         {
                             action.oneShotClip.Value=clip;
@@ -140,7 +144,7 @@
         }
         public static void replaceAudioPlayeroneShotSingle(this AudioPlayerOneShotSingle action, Dictionary<string, AudioClip> audiodic)
         {
-            AudioClip clip = GetAudioInDic(action.audioClip.Value.name, audiodic);
+            AudioClip clip = GetAudioInDic(action.audioClip.Value?.name, audiodic);
             if (clip != null)
             {
                 action.audioClip.Value = clip;
@@ -166,7 +170,7 @@
         }
         public static void replaceAudioPlayRandomSingle(this AudioPlayRandomSingle action, Dictionary<string, AudioClip> audiodic)
         {
-            AudioClip clip = GetAudioInDic(action.audioClip.Value.name, audiodic);
+            AudioClip clip = GetAudioInDic(action.audioClip.Value?.name, audiodic);
             if (clip != null)
             {
                 action.audioClip.Value = clip;
@@ -192,7 +196,8 @@
                     }
                     else
                     {
-                        AudioClip clip = GetAudioInDic(action.oneShotClip.Value.name, audiodic);
+
+                        AudioClip clip = GetAudioInDic(action.oneShotClip.Value?.name, audiodic);
                         if (clip != null)
                         {
                             action.oneShotClip.Value = clip;
@@ -221,7 +226,7 @@
         }
         public static void replacePlaySound(this PlaySound action, Dictionary<string, AudioClip> audiodic)
         {
-            AudioClip clip = GetAudioInDic(action.clip.Value.name, audiodic);
+            AudioClip clip = GetAudioInDic(action.clip.Value?.name, audiodic);
             if (clip != null)
             {
                 action.clip.Value = clip;
