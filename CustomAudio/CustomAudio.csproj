@@ -30,10 +30,6 @@
       <HintPath>..\..\1.5Moddingapi\PlayMaker.dll</HintPath>
 		<Private>false</Private>
     </Reference>
-    <Reference Include="Satchel">
-      <HintPath>..\..\1.5Moddingapi\Satchel.dll</HintPath>
-		<Private>false</Private>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\1.5Moddingapi\UnityEngine.dll</HintPath>
 		<Private>false</Private>
