@@ -1,20 +1,25 @@
 ﻿using Modding;
 using CustomAudio.Utils;
 using Hutoaction =On.HutongGames.PlayMaker.Actions;
+using CustomKnight;
 namespace CustomAudio
 {
     public class CustomAudio:Mod
     {
        new public string GetName()=>nameof(CustomAudio);
-        public static readonly string audiodir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ReplaceAudio");
+        public static string audiodir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ReplaceAudio");
         public static Dictionary<string, AudioClip> audiodic = new();
         public override string GetVersion()
         {
-            return "1.2.1";
+            return "1.3.0";
         }
         public override void Initialize()
         {
             On.HeroController.Start += Loadaudio;
+            if(ModHooks.GetMod("CustomKnight")is Mod)
+            {
+                AddCKHandle();
+            }
         }
 
         private void Loadaudio(On.HeroController.orig_Start orig, HeroController self)
@@ -36,6 +41,21 @@ namespace CustomAudio
         {
             self.replacePlaySound(audiodic);
             orig(self);
+        }
+        private void AddCKHandle()
+        {
+            SkinManager.OnSetSkin += ResetAudio;
+        }
+
+        private void ResetAudio(object sender, EventArgs e)
+        {
+            string currentSkinPath = SkinManager.GetCurrentSkin().getSwapperPath();
+            if (Directory.Exists(Path.Combine(currentSkinPath, "Audio")))
+            {
+                audiodic.Clear();
+                audiodir = Path.Combine(currentSkinPath, "Audio");
+                LoadAudioAsset();
+            }
         }
 
         private void ReplaceV2(Hutoaction.AudioPlayV2.orig_OnEnter orig, AudioPlayV2 self)
