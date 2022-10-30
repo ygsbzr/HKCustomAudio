@@ -94,7 +94,7 @@ namespace CustomAudio
             foreach(var file in Directory.GetFiles(audiodir))
             {
                 string filename = Path.GetFileNameWithoutExtension(file);
-                AudioClip audio = WavUtility.createaudioclipbybyte(File.ReadAllBytes(file), filename);
+                AudioClip audio = WavUtility.ToAudioClip(File.ReadAllBytes(file), filename);
                 audiodic[filename] = audio;
             }
             Log("Audio Load done!");
