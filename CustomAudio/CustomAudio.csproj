@@ -9,6 +9,8 @@
     <ImplicitUsings>true</ImplicitUsings>
     <Deterministic>true</Deterministic>
 	<Version>1.3.0</Version>
+      <HollowKnightFolder>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\</HollowKnightFolder>
+      <ModsFolder>$(HollowKnightFolder)\Mods\</ModsFolder>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -16,38 +18,45 @@
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.310801">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="WavLib" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\1.5Moddingapi\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(HollowKnightFolder)\Assembly-CSharp.dll</HintPath>
 	  <Private>false</Private>
     </Reference>
     <Reference Include="CustomKnight">
-      <HintPath>..\..\..\Steamself\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Custom Knight\CustomKnight.dll</HintPath>
+      <HintPath>$(HollowKnightFolder)\Mods\Custom Knight\CustomKnight.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_Assembly-CSharp">
-      <HintPath>..\..\1.5Moddingapi\MMHOOK_Assembly-CSharp.dll</HintPath>
+      <HintPath>$(HollowKnightFolder)\MMHOOK_Assembly-CSharp.dll</HintPath>
 		<Private>false</Private>
     </Reference>
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>$(HollowKnightFolder)\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils">
+      <HintPath>$(HollowKnightFolder)\MonoMod.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="PlayMaker">
-      <HintPath>..\..\1.5Moddingapi\PlayMaker.dll</HintPath>
+      <HintPath>$(HollowKnightFolder)\PlayMaker.dll</HintPath>
 		<Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\1.5Moddingapi\UnityEngine.dll</HintPath>
+      <HintPath>$(HollowKnightFolder)\UnityEngine.dll</HintPath>
 		<Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.AudioModule">
-      <HintPath>..\..\1.5Moddingapi\UnityEngine.AudioModule.dll</HintPath>
+      <HintPath>$(HollowKnightFolder)\UnityEngine.AudioModule.dll</HintPath>
 		<Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\1.5Moddingapi\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>$(HollowKnightFolder)\UnityEngine.CoreModule.dll</HintPath>
 		<Private>false</Private>
     </Reference>
   </ItemGroup>
 	<Target Name="CopyMod" AfterTargets="PostBuildEvent">
-		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="D:/Steamself/steamapps/common/Hollow Knight/hollow_knight_Data/Managed/Mods/$(TargetName)" SkipUnchangedFiles="true" />
+		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModsFolder)\$(TargetName)" SkipUnchangedFiles="true" />
 	</Target>
 	<Target Name="CreateReleaseZip" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
 		<RemoveDir Directories="$(SolutionDir)/dist" />
