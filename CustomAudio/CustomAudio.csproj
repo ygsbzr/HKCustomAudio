@@ -8,7 +8,7 @@
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>true</ImplicitUsings>
     <Deterministic>true</Deterministic>
-	<Version>1.3.0</Version>
+	<Version>1.4.0</Version>
       <HollowKnightFolder>D:\Steamself\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\</HollowKnightFolder>
       <ModsFolder>$(HollowKnightFolder)\Mods\</ModsFolder>
   </PropertyGroup>
