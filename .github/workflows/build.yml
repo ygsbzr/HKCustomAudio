@@ -53,8 +53,8 @@ jobs:
       - name: Get Details
         id: details
         run: |
-          echo "::set-output name=version::$(cat < ./artifacts/target/Version.txt)"
-          echo "::set-output name=shahash::$(cat < ./artifacts/target/sha256.txt)"
+          echo "version=$(cat < ./artifacts/target/Version.txt)" >> $GITHUB_OUTPUT
+          echo "shahash=$(cat < ./artifacts/target/sha256.txt)" >> $GITHUB_OUTPUT
       - name: Create_Release
         uses: softprops/action-gh-release@v1
         with:
@@ -62,6 +62,6 @@ jobs:
           generate_release_notes: false
           fail_on_unmatched_files: true
           tag_name: v${{steps.details.outputs.version}}
-          body: sha256':'${{steps.details.outputs.shahash}}
+          body: sha256:${{steps.details.outputs.shahash}}
           files: |
             ./artifacts/target/CustomAudio.zip

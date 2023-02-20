@@ -8,7 +8,7 @@
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>true</ImplicitUsings>
     <Deterministic>true</Deterministic>
-	<Version>1.4.0</Version>
+	<Version>1.4.1</Version>
   </PropertyGroup>
   
   <Import Project="LocalBuildProperties_example.props" Condition="Exists('LocalBuildProperties_example.props')"/>

@@ -14,7 +14,7 @@ public class CustomAudio : Mod
         
     public new string GetName() => nameof(CustomAudio);
     internal static CustomAudio Instance;
-    public override string GetVersion() => "1.4.0";
+    public override string GetVersion() => "1.4.1";
         
     public override void Initialize()
     {
