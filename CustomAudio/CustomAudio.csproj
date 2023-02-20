@@ -9,9 +9,11 @@
     <ImplicitUsings>true</ImplicitUsings>
     <Deterministic>true</Deterministic>
 	<Version>1.4.0</Version>
-      <HollowKnightFolder>D:\Steamself\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\</HollowKnightFolder>
-      <ModsFolder>$(HollowKnightFolder)\Mods\</ModsFolder>
   </PropertyGroup>
+  
+  <Import Project="LocalBuildProperties_example.props" Condition="Exists('LocalBuildProperties_example.props')"/>
+  <Import Project="LocalBuildProperties.props" Condition="Exists('LocalBuildProperties.props')"/>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
@@ -63,13 +65,14 @@
 		<MakeDir Directories="$(SolutionDir)/dist/tmp" />
 
 		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(TargetDir)/WavLib.dll;$(SolutionDir)/LICENSE;$(SolutionDir)/README.md" DestinationFolder="$(SolutionDir)/dist/tmp" />
-		<ZipDirectory SourceDirectory="$(SolutionDir)/dist/tmp" DestinationFile="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" />
+		<ZipDirectory SourceDirectory="$(SolutionDir)/dist/tmp" DestinationFile="$(SolutionDir)/dist/$(TargetName).zip" />
 		<RemoveDir Directories="$(SolutionDir)/dist/tmp" />
 		<GetFileHash Files="$(SolutionDir)/dist/$(TargetName).zip" Algorithm="SHA256">
 
 			<Output TaskParameter="Items" ItemName="FilesWithHashes" />
 		</GetFileHash>
-		<Message Importance="High" Text="@(FilesWithHashes->'%(Identity): %(FileHash)')" />
+		<WriteLinesToFile File="$(SolutionDir)/dist/sha256.txt" Lines="@(FilesWithHashes->'%(FileHash)')" Overwrite="true" Encoding="UTF-8"/>
+		<WriteLinesToFile File="$(SolutionDir)/dist/Version.txt" Lines="$(Version)"/>
 
 
 	</Target>

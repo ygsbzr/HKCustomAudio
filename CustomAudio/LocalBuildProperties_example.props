@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <HollowKnightFolder>../API</HollowKnightFolder>
+      <ModsFolder>$(HollowKnightFolder)\Mods\</ModsFolder>
+  </PropertyGroup>
+</Project>

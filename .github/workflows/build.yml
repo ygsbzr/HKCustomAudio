@@ -50,20 +50,18 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: artifacts
-      - name: Generate sha256
+      - name: Get Details
+        id: details
         run: |
-            echo -n "sha256: " > sha256.txt
-            sha256sum -b ./artifacts/target/CustomAudio.zip | cut -d " " -f 1 >> sha256.txt ;
-      - name: Get Version
-        id: get_version
-        run: echo "::set-output name=version::$(cat < ./Version.txt)"
+          echo "::set-output name=version::$(cat < ./artifacts/target/Version.txt)"
+          echo "::set-output name=shahash::$(cat < ./artifacts/target/sha256.txt)"
       - name: Create_Release
         uses: softprops/action-gh-release@v1
         with:
           draft: false
           generate_release_notes: false
           fail_on_unmatched_files: true
-          tag_name: v${{steps.get_version.outputs.version}}
-          body_path: "sha256.txt"
+          tag_name: v${{steps.details.outputs.version}}
+          body: sha256':'${{steps.details.outputs.shahash}}
           files: |
             ./artifacts/target/CustomAudio.zip
