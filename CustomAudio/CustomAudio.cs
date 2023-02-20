@@ -105,7 +105,7 @@ public class CustomAudio : Mod
         orig(self);
 
         foreach (var source in Resources.FindObjectsOfTypeAll<AudioSource>()
-                     .Where(a => a.playOnAwake))
+                     .Where(a => a.playOnAwake && a.isPlaying))
         {
             source.Play(); //force play to be called, the OnHooks will deal with the rest
             //we can't just replace the source.clip, it wont cause the new clip to play. 
