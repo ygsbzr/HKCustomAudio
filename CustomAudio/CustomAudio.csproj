@@ -65,7 +65,7 @@
 		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(TargetDir)/WavLib.dll;$(SolutionDir)/LICENSE;$(SolutionDir)/README.md" DestinationFolder="$(SolutionDir)/dist/tmp" />
 		<ZipDirectory SourceDirectory="$(SolutionDir)/dist/tmp" DestinationFile="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" />
 		<RemoveDir Directories="$(SolutionDir)/dist/tmp" />
-		<GetFileHash Files="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" Algorithm="SHA256">
+		<GetFileHash Files="$(SolutionDir)/dist/$(TargetName).zip" Algorithm="SHA256">
 
 			<Output TaskParameter="Items" ItemName="FilesWithHashes" />
 		</GetFileHash>

@@ -1,0 +1,69 @@
+name: Build
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      release_or_not:
+        description: "Create a release?"
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/Checkout@v3
+
+      - name: Setup HK MAPI
+        uses: BadMagic100/setup-hk@v1
+        with:
+          apiPath: API
+          dependencyFilePath: ModDependencies.txt
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+
+      - name: Install Dependencies
+        run: dotnet restore
+
+      - name: Build mod zip
+        run: dotnet build -c Release
+      - name: upload zip dir
+        uses: actions/upload-artifact@v3
+        with:
+          name: target
+          path: ./dist
+
+  release: 
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.release_or_not == 'true'
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+      - name: Generate sha256
+        run: |
+            echo -n "sha256: " > sha256.txt
+            sha256sum -b ./artifacts/target/CustomAudio.zip | cut -d " " -f 1 >> sha256.txt ;
+      - name: Get Version
+        id: get_version
+        run: echo "::set-output name=version::$(cat < ./Version.txt)"
+      - name: Create_Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: false
+          generate_release_notes: false
+          fail_on_unmatched_files: true
+          tag_name: v${{steps.get_version.outputs.version}}
+          body_path: "sha256.txt"
+          files: |
+            ./artifacts/target/CustomAudio.zip
